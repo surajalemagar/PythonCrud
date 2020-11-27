@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter
 from tkinter import messagebox
 import pymysql
+import data
 
 windo = tkinter.Tk()
 
@@ -22,6 +23,10 @@ L2.grid(row=2, column=0)
 E2 = Entry(windo, bd=5, width=50)
 E2.grid(row=2, column=1)
 
+host1=data.host
+name1=data.name
+password1=data.password
+database_name1=data.database_name
 
 def myButtonEvent(selection):
     print("First Name is : ", E.get())
@@ -34,8 +39,7 @@ def myButtonEvent(selection):
 
     if selection in ('Insert'):
         
-        con = pymysql.connect("127.0.0.1", "root", "123987",
-                            "test")  # connect to mysql
+        con = pymysql.connect(host1,name1,password1,database_name1)  # connect to mysql
         cur = con.cursor()  # get the cursor object
 
         createTableQuery='''create table if not exists random (fname varchar(255),
@@ -56,8 +60,7 @@ def myButtonEvent(selection):
             con.rollback()
             con.close()
     elif selection in ('Update'):
-        con = pymysql.connect("127.0.0.1", "root", "123987",
-                            "test")  # connect to mysql
+        con = pymysql.connect(host1,name1,password1,database_name1)  # connect to mysql
         cur = con.cursor()  # get the cursor object
         updateQuery="update users set \
                     fname='%s' "%(fname)+", lname='%s' "%(lname)+"\
@@ -72,8 +75,7 @@ def myButtonEvent(selection):
             con.rollback()
             con.close()
     elif selection in ('Delete'):
-        con = pymysql.connect("127.0.0.1", "root", "123987",
-                            "test")  # connect to mysql
+        con = pymysql.connect(host1,name1,password1,database_name1)  # connect to mysql
         cur = con.cursor()  # get the cursor object
         deleteQuery=''' delete from users
                     where fname='%s' '''%(fname)
@@ -87,8 +89,8 @@ def myButtonEvent(selection):
             con.rollback()
             con.close()
     elif selection in ('Select'):
-        con = pymysql.connect("127.0.0.1", "root", "123987",
-                            "test")  # connect to mysql
+        con = pymysql.connect(host1, name1, password1,
+                              database_name1)  # connect to mysql
         cur = con.cursor()  # get the cursor object
         selectQuery='''select * from users
                     where fname='%s' '''%(fname)
